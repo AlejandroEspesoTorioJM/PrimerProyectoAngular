@@ -1,0 +1,32 @@
+<h2>Tienda de Cómics</h2>
+
+<!-- Botón para alternar la vista -->
+<button (click)="toggleVista()">
+  Cambiar a vista {{ mostrarModoCompacto() ? 'Detallada' : 'Compacta' }}
+</button>
+
+<div class="contenedor-comics">
+    @for (comic of comics(); track comic.id) {
+    <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+        <h3>{{ comic.titulo }}</h3>
+        <p>Precio: {{ comic.precio }} €</p>
+        <p>Stock disponible: {{ comic.stock }} unidades</p>
+
+        <!-- Indicador de stock -->
+        @if (comic.stock > 0) {
+        <span style="color: green;">En stock</span>
+        } @else {
+        <span style="color: red; font-weight: bold;">¡AGOTADO!</span>
+        }
+
+        <!-- AQUÍ VAN LOS BOTONES (dentro de cada tarjeta) -->
+        <div style="margin-top: 10px;">
+            <button (click)="aumentarStock(comic.id)">Añadir 1</button>
+            <button (click)="venderComic(comic.id)" [disabled]="comic.stock === 0">Vender 1</button>
+        </div>
+
+    </div>
+    } @empty {
+    <p>No hay cómics registrados en el inventario.</p>
+    }
+</div>
