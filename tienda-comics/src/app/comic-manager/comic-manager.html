@@ -2,9 +2,20 @@
 
 <!-- Botón para alternar la vista -->
 <button (click)="toggleVista()">
-  Cambiar a vista {{ mostrarModoCompacto() ? 'Detallada' : 'Compacta' }}
+    Cambiar a vista {{ mostrarModoCompacto() ? 'Detallada' : 'Compacta' }}
 </button>
 
+<hr>
+
+@if (mostrarModoCompacto()) {
+<!-- Vista Compacta (Solo lista) -->
+<ul>
+    @for (comic of comics(); track comic.id) {
+    <li><strong>{{ comic.titulo }}</strong> - Stock: {{ comic.stock }}</li>
+    }
+</ul>
+} @else {
+<!-- Vista Detallada (Tarjetas completas con botones) -->
 <div class="contenedor-comics">
     @for (comic of comics(); track comic.id) {
     <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
@@ -19,14 +30,21 @@
         <span style="color: red; font-weight: bold;">¡AGOTADO!</span>
         }
 
-        <!-- AQUÍ VAN LOS BOTONES (dentro de cada tarjeta) -->
+        <!-- Botones de acción -->
         <div style="margin-top: 10px;">
             <button (click)="aumentarStock(comic.id)">Añadir 1</button>
-            <button (click)="venderComic(comic.id)" [disabled]="comic.stock === 0">Vender 1</button>
+            <button (click)="venderComic(comic.id)" [disabled]="comic.stock === 0">
+                Vender 1
+            </button>
         </div>
-
     </div>
     } @empty {
     <p>No hay cómics registrados en el inventario.</p>
     }
 </div>
+}
+
+<hr>
+
+<!-- Reto final: Botón Vaciar Almacén -->
+<button (click)="vaciarAlmacen()">Vaciar Almacén</button>

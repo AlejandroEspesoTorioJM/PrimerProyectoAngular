@@ -8,13 +8,11 @@ interface Comic {
 }
 
 @Component({
-  imports: [],
   selector: 'app-comic-manager',
-  styleUrl: './comic-manager.css',
+  imports: [],
   templateUrl: './comic-manager.html',
+  styleUrl: './comic-manager.css'
 })
-export class ComicManager { }
-
 export class ComicManagerComponent {
   // Signal para controlar el modo de vista
   mostrarModoCompacto = signal<boolean>(false);
@@ -26,10 +24,12 @@ export class ComicManagerComponent {
     { id: 103, titulo: 'Watchmen', precio: 18.00, stock: 5 }
   ]);
 
+  // Alternar vista
   toggleVista(): void {
     this.mostrarModoCompacto.update(estadoActual => !estadoActual);
   }
 
+  // Aumentar stock
   aumentarStock(idComic: number): void {
     this.comics.update(listaActual =>
       listaActual.map(item =>
@@ -37,6 +37,8 @@ export class ComicManagerComponent {
       )
     );
   }
+
+  // Vender cómic
   venderComic(idComic: number): void {
     this.comics.update(listaActual =>
       listaActual.map(item =>
@@ -44,5 +46,9 @@ export class ComicManagerComponent {
       )
     );
   }
-}
 
+  // Reto final: Vaciar almacén con .set()
+  vaciarAlmacen(): void {
+    this.comics.set([]);
+  }
+}

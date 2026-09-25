@@ -1,12 +1,16 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ComicManagerComponent } from './comic-manager/comic-manager'; 
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
+  standalone: true,
+  imports: [RouterOutlet, ComicManagerComponent], 
   templateUrl: './app.html',
+  styleUrl: './app.css'
 })
+
+// Aqui se llama a la clase
 export class App {
-  protected readonly title = signal('tienda-comics');
+  title = 'tienda-comics';
 }
